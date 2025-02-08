@@ -1,0 +1,116 @@
+1. Get Latest Movies
+        Fetches the latest movies, sorted by year (descending).
+
+        URL: GET /movies/latest
+        Query Parameters:
+        page (optional, default = 0) → Pagination index
+        size (optional, default = 4) → Number of movies per page
+        Response: 200 OK
+
+        Example Request :-
+                curl -X GET "http://localhost:8080/movies/latest?page=0&size=4"
+        Example Response :-
+                {
+                  "content": [
+                    {
+                      "year": 2024,
+                      "title": "Avengers: Secret Wars",
+                      "info": {
+                        "directors": ["Kevin Feige"],
+                        "releaseDate": "2024-05-01T00:00:00Z",
+                        "rating": 9.0,
+                        "genres": ["Action", "Adventure"],
+                        "imageUrl": "https://example.com/avengers.jpg",
+                        "plot": "The Avengers face their ultimate battle.",
+                        "actors": ["Chris Evans", "Robert Downey Jr."]
+                      }
+                    }
+                  ],
+                  "last": false,
+                    "totalPages": 1153,
+                    "totalElements": 4609,
+                    "first": false,
+                    "size": 4,
+                    "number": 1,
+                    "sort": {
+                        "sorted": false,
+                        "empty": true,
+                        "unsorted": true
+                    },
+                    "numberOfElements": 4,
+                    "empty": false
+                }
+                
+2. Search Movies
+        Find movies by title, actor, genre, or director.
+
+        URL: GET /movies/search
+        Query Parameter:
+        query → Search keyword (title, actor, genre, director)
+        Response: 200 OK or 404 NOT FOUND (if no movies match)
+        
+        Example Request :-
+                curl -X GET "http://localhost:8080/movies/search?query=avengers"
+        Example Response :-
+                [
+                  {
+                    "year": 2012,
+                    "title": "The Avengers",
+                    "info": {
+                      "directors": ["Joss Whedon"],
+                      "releaseDate": "2012-05-04T00:00:00Z",
+                      "rating": 8.0,
+                      "genres": ["Action", "Sci-Fi"],
+                      "imageUrl": "https://example.com/avengers.jpg",
+                      "plot": "Earth's mightiest heroes must come together.",
+                      "actors": ["Robert Downey Jr.", "Chris Evans"]
+                    }
+                  }
+                ]
+
+3. Get Movie by Title
+        Fetch movie details by title.
+
+        URL: GET /movies/{title}
+        Path Parameter:
+        {title} → Movie title (case-insensitive)
+        Response: 200 OK or 404 NOT FOUND (if the movie does not exist)
+        
+        Example Request :-
+                curl -X GET "http://localhost:8080/movies/The Avengers"
+        Example Response :-
+                {
+                  "year": 2012,
+                  "title": "The Avengers",
+                  "info": {
+                    "directors": ["Joss Whedon"],
+                    "releaseDate": "2012-05-04T00:00:00Z",
+                    "rating": 8.0,
+                    "genres": ["Action", "Sci-Fi"],
+                    "imageUrl": "https://example.com/avengers.jpg",
+                    "plot": "Earth's mightiest heroes must come together.",
+                    "actors": ["Robert Downey Jr.", "Chris Evans"]
+                  }
+                }
+
+Error Handling :-
+
+HTTP Status	                Meaning
+
+200 OK	                        Request successful
+400 BAD REQUEST	                Invalid request parameters
+404 NOT FOUND	                Movie not found
+500 INTERNAL SERVER ERROR	Unexpected server error
+
+
+                
+Example Error Response :-
+        {
+          "timestamp": "2025-02-07T14:35:00",
+          "status": 404,
+          "error": "Not Found",
+          "message": "Movie not found: The Unknown Movie"
+        }
+
+
+
